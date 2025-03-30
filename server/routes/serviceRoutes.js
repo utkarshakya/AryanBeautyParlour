@@ -5,7 +5,7 @@ import {
   updateService,
   deleteService,
 } from '../controllers/serviceController.js';
-import { protect, admin } from '../middleware/auth.js';
+import { protect, admin } from '../middlewares/auth.js';
 
 const router = express.Router();
 
