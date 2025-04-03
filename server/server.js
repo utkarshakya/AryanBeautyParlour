@@ -5,7 +5,6 @@ import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import serviceRoutes from './routes/serviceRoutes.js';
 
-
 // Initialize Express
 const app = express();
 
@@ -18,7 +17,7 @@ app.use('/api/services', serviceRoutes);
 
 // Test route
 app.get('/', (req, res) => {
-  res.send('Beauty Parlor API is running!');
+  res.status(200).send(`Beauty Parlor API is running!`);
 });
 
 // Connect to MongoDB and Start a Server
@@ -31,8 +30,3 @@ connectDB()
   .catch(() => {
     console.log(`Sorry! ${err}`)
   })
-
-// Start server
-// app.listen(config.port, () => {
-//   console.log(`Server running on port ${config.port}`);
-// });
