@@ -8,6 +8,9 @@ export const registerUser = async (req, res) => {
   const { name, email, password, role, phone } = req.body;
 
   try {
+
+    
+
     // Check if user exists
     let user = await User.findOne({ email });
     if (user) {
