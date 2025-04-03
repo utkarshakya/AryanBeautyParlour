@@ -8,6 +8,7 @@ export const protect = async (req, res, next) => {
 
   // Get token from headers
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    console.log("ping")
     token = req.headers.authorization.split(' ')[1]; // Format: "Bearer <token>"
   }
 

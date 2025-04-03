@@ -1,10 +1,11 @@
 {
-  "name": "aryanbeautyparlour",
+  "name": "aryan-beauty-parlour",
   "version": "1.0.0",
-  "description": "",
+  "description": "A beauty parlour website for the ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "nodemon": "npx nodemon ./server/server.js",
+    "dev": "npx npm-run-all --parallel nodemon"
   },
   "keywords": [],
   "author": "",

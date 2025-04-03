@@ -13,9 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
-connectDB();
-
 app.use('/api/auth', authRoutes)
 app.use('/api/services', serviceRoutes);
 
@@ -24,7 +21,18 @@ app.get('/', (req, res) => {
   res.send('Beauty Parlor API is running!');
 });
 
+// Connect to MongoDB and Start a Server
+connectDB()
+  .then(() => {
+    app.listen(config.port, () => {
+      console.log(`Server running on port ${config.port}`)
+    })
+  })
+  .catch(() => {
+    console.log(`Sorry! ${err}`)
+  })
+
 // Start server
-app.listen(config.port, () => {
-  console.log(`Server running on port ${config.port}`);
-});
+// app.listen(config.port, () => {
+//   console.log(`Server running on port ${config.port}`);
+// });
