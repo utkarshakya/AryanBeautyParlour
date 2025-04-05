@@ -11,11 +11,8 @@ const router = express.Router();
 
 router
   .route('/')
+  .get(getServices) // Public access
   .post(protect, admin, createService) // Only admins can create
-  .get(getServices); // Public access
-
-router
-  .route('/:id')
   .put(protect, admin, updateService) // Only admins can update
   .delete(protect, admin, deleteService); // Only admins can delete
 
