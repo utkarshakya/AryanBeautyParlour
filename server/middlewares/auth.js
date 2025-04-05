@@ -8,7 +8,6 @@ export const protect = async (req, res, next) => {
 
   // Get token from headers
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    console.log("ping")
     token = req.headers.authorization.split(' ')[1]; // Format: "Bearer <token>"
   }
 
@@ -32,9 +31,9 @@ export const protect = async (req, res, next) => {
 
 // Restrict route to admins/staff
 export const admin = (req, res, next) => {
-  if (req.user && (req.user.role === 'admin' || req.user.role === 'staff')) {
+  if (req.user && (req.user.role === 'admin')) {
     next();
   } else {
-    res.status(403).json({ message: 'Not authorized as admin/staff' });
+    res.status(403).json({ message: 'Not authorized as admin' });
   }
 };
