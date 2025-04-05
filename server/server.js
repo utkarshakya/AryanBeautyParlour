@@ -17,7 +17,7 @@ app.use('/api/services', serviceRoutes);
 
 // Test route
 app.get('/', (req, res) => {
-  res.status(200).send(`Beauty Parlor API is running!`);
+  res.status(200).send("Beauty Is Applied");
 });
 
 // Connect to MongoDB and Start a Server
