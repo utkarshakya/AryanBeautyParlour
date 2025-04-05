@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import config from '../config/env.js';
-import User from '../models/User.js';
+import User from '../models/userModel.js';
 
 // Protect routes (user must be logged in)
 export const protect = async (req, res, next) => {
