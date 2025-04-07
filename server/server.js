@@ -4,6 +4,7 @@ import config from './config/env.js';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import serviceRoutes from './routes/serviceRoutes.js';
+import appointmentRoutes from './routes/appointmentRoutes.js';
 
 // Initialize Express
 const app = express();
@@ -12,8 +13,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/auth', authRoutes)
+app.use('/api/auth', authRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/appointment', appointmentRoutes);
 
 // Test route
 app.get('/', (req, res) => {

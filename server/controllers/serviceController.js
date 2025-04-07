@@ -1,22 +1,11 @@
 import Service from '../models/serviceModel.js';
 
-// @desc    Get all services
-export const getServices = async (req, res) => {
-  try {
-    const services = await Service.find();
-    res.json(services);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server Error' });
-  }
-};
-
 // @desc    Create a service (Admin only)
 export const createService = async (req, res) => {
   try {
     const { name, description, price, duration, category } = req.body;
 
-    const service = new Service({
+    const service = await new Service.create({
       name,
       description,
       price,
@@ -24,8 +13,18 @@ export const createService = async (req, res) => {
       category,
     });
 
-    await service.save();
     res.status(201).json(service);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+// @desc    Get all services (Anyone)
+export const getServices = async (req, res) => {
+  try {
+    const services = await Service.find();
+    res.json(services);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server Error' });
