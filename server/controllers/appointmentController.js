@@ -57,6 +57,18 @@ export const updateAppointment = async (req, res) => {
   const userRole = req.user.role; // 'customer' or 'admin'
 
   try {
+
+    // Before updating first check for any change
+    const changesDetected = (
+      (serviceId && serviceId !== appointment.service.toString()) ||
+      (startTime && new Date(startTime) > appointment.startTime) ||
+      (notes && notes !== appointment.notes)
+    );
+
+    if (!changesDetected) {
+      return res.status(400).json({ message: 'No changes detected' });
+    }
+
     // Step 1: Find the appointment
     const appointment = await Appointment.findById(id);
     if (!appointment) {
@@ -119,6 +131,35 @@ export const updateAppointment = async (req, res) => {
       .populate("service", "name price");
 
     res.json(populatedAppointment);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const deleteAppointment = async (req, res) => {
+  const { id } = req.params; // Appointment ID
+  const userId = req.user.id; // Logged-in user ID
+  const userRole = req.user.role; // 'customer' or 'admin'
+
+  try {
+    // Step 1: Find the appointment
+    const appointment = await Appointment.findById(id);
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    // Step 2: Authorization check
+    if (
+      appointment.customer.toString() !== userId &&
+      userRole !== "admin"
+    ) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    // Step 3: Delete appointment
+    await Appointment.deleteOne({ _id: id });
+
+    res.json({ message: "Appointment deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

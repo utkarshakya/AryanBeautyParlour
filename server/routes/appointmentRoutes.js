@@ -1,18 +1,22 @@
 import express from 'express';
 
-import { getAppointments } from '../controllers/appointmentController.js';
+import { createAppointment, getAppointments, updateAppointment, deleteAppointment } from '../controllers/appointmentController.js';
+import { validateCreateAppointment, validateUpdateAppointment } from '../validators/appointmentValidator.js';
+import { handleValidationErrors } from '../validators/userValidator.js'
 import { protect } from '../middlewares/auth.js';
 
 const router = express.Router();
 
+router.use(protect);
+
 router
   .route('/')
-  .get(getAppointments) // Public access
-  .post(protect, createService) // Only admins can create
+  .get(getAppointments) // Get appointment
+  .post(validateCreateAppointment, handleValidationErrors, createAppointment); // Create appointment
 
 router
   .route("/:id")
-  .put(updateAppointment) // Update appointment
+  .put(validateUpdateAppointment, handleValidationErrors, updateAppointment) // Update appointment
   .delete(deleteAppointment); // Delete appointment
 
 export default router;

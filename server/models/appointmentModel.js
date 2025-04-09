@@ -50,7 +50,7 @@ const appointmentSchema = new mongoose.Schema(
       default: '',
     },
   },
-  { timestamps: true } // Adds createdAt and updatedAt fields
+  { timestamps: true }
 );
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
