@@ -23,8 +23,8 @@ export const registerUser = async (req, res) => {
     await user.save();
 
     // Generate JWT
-    const token = jwt.sign({ id: user._id }, config.jwtSecret, {
-      expiresIn: '1h',
+    const token = jwt.sign({ id: user._id, role: user.role }, config.jwtSecret, {
+      expiresIn: '10h',
     });
 
     res.status(201).json({ token });
@@ -52,8 +52,8 @@ export const loginUser = async (req, res) => {
     }
 
     // Generate JWT
-    const token = jwt.sign({ id: user._id }, config.jwtSecret, {
-      expiresIn: '1h',
+    const token = jwt.sign({ id: user._id, role: user.role }, config.jwtSecret, {
+      expiresIn: '10h',
     });
 
     res.json({ token });
