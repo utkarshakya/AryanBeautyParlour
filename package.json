@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "nodemon": "npx nodemon ./server/server.js",
-    "vite": "npx vite ./client",
-    "dev": "npx npm-run-all --parallel nodemon vite",
+    "vite": "npx vite ./client --host",
+    "tailwind": "npx @tailwindcss/cli -i ./client/src/styles/input.css -o ./client/src/styles/output.css --watch",
+    "frontend": "npx npm-run-all --parallel vite tailwind",
+    "dev": "npx npm-run-all --parallel nodemon vite tailwind",
     "build": "npx vite build ./client"
   },
   "keywords": [],
@@ -33,8 +35,10 @@
     "react-router": "^7.5.0"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.1.3",
     "nodemon": "^3.1.9",
     "npm-run-all": "^4.1.5",
+    "tailwindcss": "^4.1.3",
     "vite": "^6.2.6"
   }
 }
