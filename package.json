@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "nodemon": "npx nodemon ./server/server.js",
-    "dev": "npx npm-run-all --parallel nodemon"
+    "vite": "npx vite ./client",
+    "dev": "npx npm-run-all --parallel nodemon vite",
+    "build": "npx vite build ./client"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "axios": "^1.8.4",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.6.0",
     "cors": "^2.8.5",
@@ -21,7 +24,13 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.1",
     "nodemailer": "^6.10.0",
+    "razorpay": "^2.9.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.9",
-    "razorpay": "^2.9.6"
+    "npm-run-all": "^4.1.5",
+    "vite": "^6.2.6"
   }
 }
