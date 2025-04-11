@@ -136,6 +136,7 @@ export const updateAppointment = async (req, res) => {
   }
 };
 
+// @desc  Delete appointment (Authorized User & Admin)
 export const deleteAppointment = async (req, res) => {
   const { id } = req.params; // Appointment ID
   const userId = req.user.id; // Logged-in user ID
