@@ -1,7 +1,6 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import config from "../config/env.js";
+import { getJwtToken } from "../utils/functions.js";
 
 // Register User
 export const registerUser = async (req, res) => {
@@ -11,7 +10,7 @@ export const registerUser = async (req, res) => {
     // Check if user exists
     let user = await User.findOne({ email });
     if (user) {
-      return res.status(400).send("Sorry, User with this email already exists");
+      return res.status(400).send("Sorry, User already exists. Try Log In");
     }
 
     // Hash password
@@ -22,15 +21,8 @@ export const registerUser = async (req, res) => {
     user = new User({ name, email, password: hashedPassword, role, phone });
     await user.save();
 
-    // Generate JWT
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      config.jwtSecret,
-      {
-        expiresIn: "10h",
-      }
-    );
-
+    // Get JWT Token and send it to user
+    const token = getJwtToken({ id: user._id, role: user.role }, "1h");
     res.status(201).json({ token });
   } catch (err) {
     console.error(err.message);
@@ -55,16 +47,9 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Generate JWT
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      config.jwtSecret,
-      {
-        expiresIn: "10h",
-      }
-    );
-
-    res.json({ token });
+    // Get JWT Token and send it to user
+    const token = getJwtToken({ id: user._id, role: user.role }, "1h");
+    res.status(200).json({ token });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
