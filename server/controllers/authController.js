@@ -1,7 +1,7 @@
-import User from '../models/userModel.js';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import config from '../config/env.js';
+import User from "../models/userModel.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import config from "../config/env.js";
 
 // Register User
 export const registerUser = async (req, res) => {
@@ -11,7 +11,7 @@ export const registerUser = async (req, res) => {
     // Check if user exists
     let user = await User.findOne({ email });
     if (user) {
-      return res.status(400).send('Sorry, User with this email already exists');
+      return res.status(400).send("Sorry, User with this email already exists");
     }
 
     // Hash password
@@ -23,14 +23,18 @@ export const registerUser = async (req, res) => {
     await user.save();
 
     // Generate JWT
-    const token = jwt.sign({ id: user._id, role: user.role }, config.jwtSecret, {
-      expiresIn: '10h',
-    });
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      config.jwtSecret,
+      {
+        expiresIn: "10h",
+      }
+    );
 
     res.status(201).json({ token });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 };
 
@@ -42,34 +46,38 @@ export const loginUser = async (req, res) => {
     // Check user
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
     // Generate JWT
-    const token = jwt.sign({ id: user._id, role: user.role }, config.jwtSecret, {
-      expiresIn: '10h',
-    });
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      config.jwtSecret,
+      {
+        expiresIn: "10h",
+      }
+    );
 
     res.json({ token });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 };
 
 // Logout User
 export const logoutUser = async (req, res) => {
   try {
-    let token = req.headers.authorization.split(" ")[1];
-    
+    // let token = req.headers.authorization.split(" ")[1];
+    // This is temporary and not a good solution, will update soon...
+    res.status(201).json({ token: "theThingIsYouCannotAccessNowSoBye" });
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ message: error.message });
   }
-
-}
+};
