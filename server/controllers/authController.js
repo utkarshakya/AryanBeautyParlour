@@ -62,3 +62,14 @@ export const loginUser = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+// Logout User
+export const logoutUser = async (req, res) => {
+  try {
+    let token = req.headers.authorization.split(" ")[1];
+    
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+
+}
