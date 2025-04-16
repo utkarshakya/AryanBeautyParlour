@@ -8,7 +8,7 @@ import {
   appointmentRoutes,
   paymentRoutes,
   notificationRoutes,
-} from "./routes";
+} from "./routes/index.js";
 
 // Initialize Express
 const app = express();
