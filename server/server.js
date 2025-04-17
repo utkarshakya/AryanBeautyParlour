@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import config from "./config/env.js";
-import connectDB from "./config/db.js";
+import { connectMongoDB, connectRedis } from "./config/db.js";
 import {
   authRoutes,
   serviceRoutes,
@@ -17,6 +17,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/appointments", appointmentRoutes);
@@ -28,13 +29,15 @@ app.get("/", (req, res) => {
   res.status(200).send("Beauty Is Applied");
 });
 
-// Connect to MongoDB and Start a Server
-connectDB()
-  .then(() => {
-    app.listen(config.port, () => {
+// Connect to Database and Start a Server
+(async () => {
+  try {
+    await Promise.all([connectMongoDB(), connectRedis()]);
+    app.listen(config.port || 3000, () => {
       console.log(`Server running on port ${config.port}`);
     });
-  })
-  .catch(() => {
-    console.log(`Sorry! ${err}`);
-  });
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
+})();
