@@ -1,6 +1,8 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import { getJwtToken } from "../utils/functions.js";
+import client from "../utils/redisClient.js";
+import jwt from "jsonwebtoken";
 
 // Register User
 export const registerUser = async (req, res) => {
@@ -59,8 +61,10 @@ export const loginUser = async (req, res) => {
 // Logout User
 export const logoutUser = async (req, res) => {
   try {
-    // let token = req.headers.authorization.split(" ")[1];
-    // This is temporary and not a good solution, will update soon...
+    const token = req.headers.authorization.split(" ")[1];
+    const endAt = jwt.decode(token)["exp"];
+    await client.set(`token:${token}`, "Invalid");
+    await client.expireAt(`token:${token}`, endAt);
     res.status(201).json({ token: "theThingIsYouCannotAccessNowSoBye" });
   } catch (error) {
     res.status(500).json({ message: error.message });
