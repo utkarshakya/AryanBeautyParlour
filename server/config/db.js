@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { createClient } from "redis";
+import client from "../utils/redisClient.js";
 import config from "./env.js";
 
 export const connectMongoDB = async () => {
@@ -14,15 +14,6 @@ export const connectMongoDB = async () => {
 
 export const connectRedis = async () => {
   try {
-    const client = createClient({
-      username: config.redis.username,
-      password: config.redis.password,
-      socket: {
-        host: config.redis.host,
-        port: config.redis.port,
-      },
-    });
-
     await client.connect();
     console.log("Redis Connected");
   } catch (error) {
