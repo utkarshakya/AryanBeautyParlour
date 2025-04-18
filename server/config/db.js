@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import client from "../utils/redisClient.js";
+import client from "./redisClient.js";
 import config from "./env.js";
 
 export const connectMongoDB = async () => {

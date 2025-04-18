@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import config from "../config/env.js";
-import client from "./redisClient.js";
+import client from "../config/redisClient.js";
 
 // Generate A New JWT Token
 export function getJwtToken(payload, expire) {

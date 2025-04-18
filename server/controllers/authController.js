@@ -1,7 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import { getJwtToken } from "../utils/functions.js";
-import client from "../utils/redisClient.js";
+import client from "../config/redisClient.js";
 import jwt from "jsonwebtoken";
 
 // Register User
