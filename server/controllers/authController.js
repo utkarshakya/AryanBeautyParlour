@@ -51,6 +51,7 @@ export const loginUser = async (req, res) => {
 
     // Get JWT Token and send it to user
     const token = getJwtToken({ id: user._id, role: user.role }, "1h");
+
     res.status(200).json({ token });
   } catch (err) {
     console.error(err.message);

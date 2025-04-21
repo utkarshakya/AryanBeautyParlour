@@ -1,7 +1,7 @@
 import { createClient } from "redis";
 import config from "./env.js";
 
-const client = createClient({
+export default createClient({
   username: config.redis.username,
   password: config.redis.password,
   socket: {
@@ -9,5 +9,3 @@ const client = createClient({
     port: config.redis.port,
   },
 });
-
-export default client;
