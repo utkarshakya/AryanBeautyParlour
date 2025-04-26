@@ -1,15 +1,15 @@
 {
   "name": "aryan-beauty-parlour",
   "version": "1.0.0",
-  "description": "A beauty parlour website for the ",
+  "description": "A full stack beauty parlour web application",
   "main": "index.js",
   "scripts": {
-    "nodemon": "npx nodemon ./server/server.js",
-    "vite": "npx vite ./client --host",
+    "vite": "vite ./client --host",
     "tailwind": "npx @tailwindcss/cli -i ./client/src/styles/input.css -o ./client/src/styles/output.css --watch",
-    "frontend": "npx npm-run-all --parallel vite tailwind",
-    "dev": "npx npm-run-all --parallel nodemon vite tailwind",
-    "build": "npx vite build ./client"
+    "client": "concurrently --names \"VITE,TAILWIND\" --prefix-colors \"red,blue\" \"npm run vite\" \"npm run tailwind\"",
+    "server": "nodemon ./server/server.js",
+    "dev": "concurrently --names \"VITE,TAILWIND,NODEMON\" --prefix-colors \"red,blue,green\" \"npm run vite\" \"npm run tailwind\" \"npm run server\" --kill-others",
+    "build": "vite build ./client"
   },
   "keywords": [],
   "author": "",
@@ -36,8 +36,8 @@
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.3",
+    "concurrently": "^9.1.2",
     "nodemon": "^3.1.9",
-    "npm-run-all": "^4.1.5",
     "redis": "^4.7.0",
     "tailwindcss": "^4.1.3",
     "vite": "^6.2.6"
