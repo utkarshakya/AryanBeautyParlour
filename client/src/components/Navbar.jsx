@@ -1,5 +1,5 @@
-import { useState } from "react";
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
@@ -25,6 +25,9 @@ export default function Navbar() {
             <Link to="/contact" className="text-gray-600 hover:text-pink-600">
               Contact
             </Link>
+            <Link to="/login" className="text-gray-600 hover:text-pink-600">
+              Login
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -40,14 +43,17 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden pb-4">
-            <Link to="/services" className="block px-4 py-2 text-gray-600">
+            <Link to="/services" className="block px-4 py-2 text-gray-600 bg-pink-100 my-2 rounded-r-full">
               Services
             </Link>
-            <Link to="/about" className="block px-4 py-2 text-gray-600">
+            <Link to="/about" className="block px-4 py-2 text-gray-600 bg-pink-100 my-2 rounded-r-full">
               About
             </Link>
-            <Link to="/contact" className="block px-4 py-2 text-gray-600">
+            <Link to="/contact" className="block px-4 py-2 text-gray-600 bg-pink-100 my-2 rounded-r-full">
               Contact
+            </Link>
+            <Link to="/login" className="block px-4 py-2 text-gray-600 bg-pink-100 my-2 rounded-r-full">
+              Login
             </Link>
           </div>
         )}
